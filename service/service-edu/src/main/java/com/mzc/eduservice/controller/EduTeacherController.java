@@ -65,6 +65,10 @@ public class EduTeacherController {
     public R  pageListTeacher(
             @ApiParam(name = "current",value = "当前页",required = true)
             @PathVariable long current,@PathVariable long limit){
+
+        int a = 10/0;
+
+
         //创建page对象
         Page<EduTeacher> pageTeacher = new Page<>(current,limit);
         //调用方法实现分页
