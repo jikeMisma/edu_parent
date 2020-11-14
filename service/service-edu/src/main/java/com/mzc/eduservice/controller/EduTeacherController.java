@@ -80,6 +80,7 @@ public class EduTeacherController {
     }
 
     //4 条件查询带分页的方法
+    @ApiOperation(value = "条件查询带分页的方法")
     @PostMapping("pageTeacherCondition/{current}/{limit}")
     public R pageTeacherCondition(@PathVariable long current,@PathVariable long limit,
                                   @RequestBody(required = false)  TeacherQuery teacherQuery) {
@@ -116,6 +117,42 @@ public class EduTeacherController {
         List<EduTeacher> records = pageTeacher.getRecords(); //数据list集合
         return R.ok().data("total",total).data("rows",records);
     }
+
+    //添加讲师的接口
+    @ApiOperation(value = "添加讲师的接口")
+    @PostMapping("addTeacher")
+    public R addTeacher(@RequestBody EduTeacher eduTeacher){
+
+        boolean save = eduTeacherService.save(eduTeacher);
+        if(save){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+    }
+
+    //根据讲师ID进行查询
+    @ApiOperation(value = "根据讲师ID进行查询")
+    @GetMapping("getTeacher/{id}")
+    public R getTeacher(
+            @ApiParam(value = "讲师id")
+            @PathVariable String id){
+        EduTeacher eduTeacher = eduTeacherService.getById(id);
+        return R.ok().data("teacher",eduTeacher);
+    }
+
+    //讲师修改功能
+    @PostMapping("updateTeacher")
+    public R updateTeacher(@RequestBody EduTeacher eduTeacher){
+        boolean flag = eduTeacherService.updateById(eduTeacher);
+        if(flag){
+            return R.ok();
+        }else{
+            return R.error();
+        }
+
+    }
+
 
 
 
