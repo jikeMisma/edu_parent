@@ -7,6 +7,7 @@ import com.mzc.commonutils.R;
 import com.mzc.eduservice.entity.EduTeacher;
 import com.mzc.eduservice.entity.vo.TeacherQuery;
 import com.mzc.eduservice.service.EduTeacherService;
+import com.mzc.servicebase.ExceptionHandler.GuliException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -66,7 +67,13 @@ public class EduTeacherController {
             @ApiParam(name = "current",value = "当前页",required = true)
             @PathVariable long current,@PathVariable long limit){
 
-        int a = 10/0;
+        //异常测试
+//        try{
+//            int i = 2 / 0;
+//        }catch (Exception e){
+//            //指定自定义异常
+//            throw  new GuliException(20001,"执行了自定义异常处理");
+//        }
 
 
         //创建page对象
