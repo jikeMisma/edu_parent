@@ -30,7 +30,8 @@ import java.util.Map;
 
 @Api(description="讲师管理")
 @RestController
-@RequestMapping("/eduservice/edu-teacher")
+@CrossOrigin
+@RequestMapping("/eduservice/teacher")
 public class EduTeacherController {
 
     //把service注入
@@ -69,11 +70,11 @@ public class EduTeacherController {
 
         //异常测试
 //        try{
-//            int i = 2 / 0;
-//        }catch (Exception e){
-//            //指定自定义异常
-//            throw  new GuliException(20001,"执行了自定义异常处理");
-//        }
+////            int i = 2 / 0;
+////        }catch (Exception e){
+////            //指定自定义异常
+////            throw  new GuliException(20001,"执行了自定义异常处理");
+////        }
 
 
         //创建page对象
