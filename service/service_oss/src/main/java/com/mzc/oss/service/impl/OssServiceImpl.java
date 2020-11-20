@@ -64,7 +64,7 @@ public class OssServiceImpl implements OssService {
 
             //把上传之后的文件路径进行返回
             //需要将路径手动拼接出来
-            String url = "https://"+bucketName+"."+fileName;
+            String url = "https://"+bucketName+"."+endpoint+"/"+fileName;
             return url;
         }catch (Exception e){
             e.printStackTrace();
