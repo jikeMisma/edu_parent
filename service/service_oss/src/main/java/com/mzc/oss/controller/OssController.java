@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Api(description = "OOS对象存储接口")
 @RestController
-@CrossOrigin
+@CrossOrigin(maxAge = 5600)
 @RequestMapping("/eduoss/fileoss")
 public class OssController {
 
