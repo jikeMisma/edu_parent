@@ -87,7 +87,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         int count = videoService.count(wrapper);
         //判断
         if(count > 0){//能查询出小结，不删除
-            throw  new GuliException(20001,"不嫩删除");
+            throw  new GuliException(20001,"不能删除");
         }else{//查不出数据，可以删除
             int delete = baseMapper.deleteById(chapterId);
             return delete > 0;
