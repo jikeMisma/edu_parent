@@ -3,10 +3,13 @@ package com.mzc.eduservice.service.impl;
 import com.mzc.eduservice.entity.EduCourse;
 import com.mzc.eduservice.entity.EduCourseDescription;
 import com.mzc.eduservice.entity.vo.CourseInfoVo;
+import com.mzc.eduservice.entity.vo.CoursePublishVo;
 import com.mzc.eduservice.mapper.EduCourseMapper;
+import com.mzc.eduservice.service.EduChapterService;
 import com.mzc.eduservice.service.EduCourseDescriptionService;
 import com.mzc.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mzc.eduservice.service.EduVideoService;
 import com.mzc.servicebase.ExceptionHandler.GuliException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,13 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+    //注入小结和章节的service
+    @Autowired
+    private EduVideoService eduVideoService;
+
+    @Autowired
+    private EduChapterService chapterService;
 
     //添加课程信息
     @Override
@@ -83,5 +93,36 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         description.setId(courseInfoVo.getId());
         description.setDescription(courseInfoVo.getDescription());
         courseDescriptionService.updateById(description);
+    }
+
+    //根据课程id查询课程确认信息
+    @Override
+    public CoursePublishVo publishCourseInfo(String courseId) {
+        //调用mapper
+        CoursePublishVo publishCourseInfo = baseMapper.getPublishCourseInfo(courseId);
+        return publishCourseInfo;
+    }
+
+    //删除课程
+    @Override
+    public void removeCourse(String courseId) {
+
+        //1.根据id删除小结
+        eduVideoService.removeVideoByCourseId(courseId);
+
+        //2、根据id删除章节
+        chapterService.removeChapterByCourseId(courseId);
+
+        //3.根据id删除描述
+        courseDescriptionService.removeById(courseId);
+
+        //4.根据id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        //System.out.println("===========================================>"+result);
+        if(result ==0){
+            throw  new GuliException(200001,"删除课程失败！");
+        }
+
+
     }
 }

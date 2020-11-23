@@ -37,8 +37,8 @@ public class SwaggerConfig {
     private ApiInfo webApiInfo(){
 
         return new ApiInfoBuilder()
-                .title("网站-课程中心API文档")
-                .description("本文档描述了课程中心微服务接口定义")
+                .title("在线教育后台管理-API文档")
+                .description("本文档描述在线教育系统管理端后台接口的定义")
                 .version("1.0")
                 .contact(new Contact("java", "https://blog.csdn.net/mzc_love", "2889479657@qq.com"))
                 .build();
