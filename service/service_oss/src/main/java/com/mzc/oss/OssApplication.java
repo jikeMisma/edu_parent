@@ -3,6 +3,7 @@ package com.mzc.oss;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @博客地址 https://blog.csdn.net/mzc_love
  */
 
+@EnableDiscoveryClient
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @ComponentScan(basePackages = {"com.mzc"})
 public class OssApplication {

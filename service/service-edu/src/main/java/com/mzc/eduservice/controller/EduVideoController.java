@@ -2,10 +2,13 @@ package com.mzc.eduservice.controller;
 
 
 import com.mzc.commonutils.R;
+import com.mzc.eduservice.client.VodClient;
 import com.mzc.eduservice.entity.EduVideo;
 import com.mzc.eduservice.service.EduVideoService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StreamUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -25,6 +28,10 @@ public class EduVideoController {
     @Autowired
     private EduVideoService videoService;
 
+    //注入VodClient
+    @Autowired
+    private VodClient vodClient;
+
     //添加小节
     @PostMapping("addVideo")
     public R addVideo(@RequestBody EduVideo eduVideo) {
@@ -33,10 +40,20 @@ public class EduVideoController {
     }
 
     //删除小节
-    // TODO 后面这个方法需要完善：删除小节时候，同时把里面视频删除
     @DeleteMapping("{id}")
     public R deleteVideo(@PathVariable String id) {
+        //根据小节id获取视频id
+        EduVideo video = videoService.getById(id);
+        String videoSourceId = video.getVideoSourceId();
+        //判断小节id是否有视频id
+        if(!StringUtils.isEmpty(videoSourceId)){
+            //根据视频id远程调用实现视频删除
+            vodClient.removeAliyunVideo(videoSourceId);
+            System.out.println("删除id为:{"+id+"}"+"的视频成功！");
+        }
+
         videoService.removeById(id);
+
         return R.ok();
     }
 

@@ -11,6 +11,7 @@ import com.mzc.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mzc.eduservice.service.EduVideoService;
 import com.mzc.servicebase.ExceptionHandler.GuliException;
+import org.slf4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse> implements EduCourseService {
+
 
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
@@ -70,6 +72,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         CourseInfoVo courseInfoVo = new CourseInfoVo();
         BeanUtils.copyProperties(eduCourse,courseInfoVo);
+
 
         //2.在查询课程的简介表
         EduCourseDescription courseDescription = courseDescriptionService.getById(courseId);
@@ -119,7 +122,7 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         //4.根据id删除课程本身
         int result = baseMapper.deleteById(courseId);
         //System.out.println("===========================================>"+result);
-        if(result ==0){
+        if(result == 0){
             throw  new GuliException(200001,"删除课程失败！");
         }
 
