@@ -5,6 +5,7 @@ import com.mzc.commonutils.R;
 import com.mzc.eduservice.client.VodClient;
 import com.mzc.eduservice.entity.EduVideo;
 import com.mzc.eduservice.service.EduVideoService;
+import com.mzc.servicebase.ExceptionHandler.GuliException;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StreamUtils;
@@ -48,8 +49,10 @@ public class EduVideoController {
         //判断小节id是否有视频id
         if(!StringUtils.isEmpty(videoSourceId)){
             //根据视频id远程调用实现视频删除
-            vodClient.removeAliyunVideo(videoSourceId);
-            System.out.println("删除id为:{"+id+"}"+"的视频成功！");
+            R result = vodClient.removeAliyunVideo(videoSourceId);
+            if(result.getCode() == 20001){
+                throw new GuliException(20001,"删除视频失败，熔断器Hystrix......");
+            }
         }
 
         videoService.removeById(id);

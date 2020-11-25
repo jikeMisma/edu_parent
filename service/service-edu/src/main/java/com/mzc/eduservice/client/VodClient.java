@@ -16,7 +16,7 @@ import java.util.List;
  * @motto 腹有诗书气自华
  * @博客地址 https://blog.csdn.net/mzc_love
  */
-@FeignClient("service-vod")
+@FeignClient(name = "service-vod",fallback = VodFileDegradeFeignClient.class)
 @Component
 public interface VodClient {
 
